@@ -1,0 +1,96 @@
+:root {
+  --color-bg: #181c24;
+  --color-bg-alt: #23283b;
+  --color-text: #fff;
+  --color-primary: #2196f3;
+  --color-secondary: #90caf9;
+  --color-card: #23283b;
+  --color-border: #333a4d;
+  --color-header: #23283b;
+  --color-widget-header: #2196f3;
+  --color-widget-header-text: #fff;
+}
+
+.light-theme {
+  --color-bg: #f5f7fa;
+  --color-bg-alt: #fff;
+  --color-text: #181c24;
+  --color-primary: #1976d2;
+  --color-secondary: #64b5f6;
+  --color-card: #fff;
+  --color-border: #e0e0e0;
+  --color-header: #fff;
+  --color-widget-header: #1976d2;
+  --color-widget-header-text: #fff;
+}
+
+body, .App {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.App-header {
+  background-color: var(--color-header);
+  color: var(--color-text);
+}
+
+.App-link {
+  color: var(--color-primary);
+}
+
+/* Add more overrides as needed for cards, widgets, etc. */
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.widget-panel {
+  background: #232323;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  border-top: 4px solid #2196f3;
+  margin-bottom: 24px;
+  min-width: 320px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-panel-header {
+  background: #2196f3;
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 10px 10px 0 0;
+  font-size: 1.1em;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.widget-panel-content {
+  padding: 18px 20px 16px 20px;
+  color: #f4f4f4;
+  font-size: 1em;
+}
