@@ -1,4 +1,4 @@
-# Sistem Modern de Management Email cu AI
+# PLATFORMĂ PENTRU OPTIMIZAREA PROCESĂRII E-MAILURILOR
 
 **Repository:** [https://github.com/Mdisomchik/Licenta_last](https://github.com/Mdisomchik/Licenta_last)
 
@@ -107,4 +107,3 @@ Aplicația va fi disponibilă pe [http://localhost:3000](http://localhost:3000).
 - Automatica si Calculatoare, Informatica
 
 ---
-
