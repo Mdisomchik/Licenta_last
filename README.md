@@ -100,22 +100,11 @@ Aplicația va fi disponibilă pe [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## Observații
-
-- **Nu include fișiere binare sau compilate** (ex: `node_modules`, `__pycache__`, etc.)
-- Pentru deployment pe server, folosește `npm run build` pentru frontend și un server WSGI (ex: gunicorn) pentru Flask dacă e nevoie.
-- Pentru orice problemă, consultă documentația din cod sau contactează autorul.
-
----
-
 ## Autor
 
-- [Nume Student]
-- [Universitatea Politehnica Timișoara]
-- [Anul, Specializarea]
+- Capinus Maxim
+- Universitatea Politehnica Timișoara
+- Automatica si Calculatoare, Informatica
 
 ---
 
-## Licență
-
-Acest proiect este realizat pentru lucrarea de licență și nu este destinat utilizării comerciale fără acordul autorului.
