@@ -1634,116 +1634,116 @@ const App = () => {
             )}
             {showAIReply && (
               <div key="ai-reply" data-grid={{ x: 4, y: 14, w: 2, h: 4, minW: 2, minH: 4 }}>
-                <WidgetCard
-                  title={<Typography variant="h6" sx={{ fontWeight: 900, fontSize: 22, letterSpacing: 0.5, color: '#fff' }}>AI Reply</Typography>}
+              <WidgetCard
+                title={<Typography variant="h6" sx={{ fontWeight: 900, fontSize: 22, letterSpacing: 0.5, color: '#fff' }}>AI Reply</Typography>}
                   onHide={() => setShowAIReply(false)}
-                  icon={<AutoAwesome />}
-                >
+                icon={<AutoAwesome />}
+              >
                   <Box sx={{ p: 2, textAlign: 'center', maxHeight: 340, overflowY: 'auto' }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleGenerateSmartReply}
+                    disabled={aiLoading.smartReply}
+                    sx={{ mb: 2, fontWeight: 700 }}
+                  >
+                    {aiLoading.smartReply ? 'Generating...' : 'Generate AI Reply'}
+                  </Button>
+                  {aiLoading.smartReply ? (
+                    <AILoadingState message="Generating a smart reply..." />
+                  ) : smartReplyResult && (
+                    <Box sx={{ mt: 2, p: 2, bgcolor: '#232b3b', borderRadius: 2, border: '1.5px solid #42a5f5' }}>
+                      <Typography variant="subtitle2" sx={{ color: '#90caf9', mb: 1, fontWeight: 600 }}>AI Reply:</Typography>
+                      <Typography variant="body2" sx={{ color: '#fff', fontSize: 15, whiteSpace: 'pre-line' }}>{smartReplyResult}</Typography>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        sx={{ mt: 1 }}
+                        onClick={() => {
+                          setComposePrefill({
+                            to: selectedEmail.from || '',
+                            subject: selectedEmail.subject ? 'Re: ' + selectedEmail.subject : '',
+                            body: smartReplyResult,
+                          });
+                          setComposeOpen(true);
+                          showNotification('AI reply moved to compose window!', 'success');
+                        }}
+                      >
+                        Use Reply
+                      </Button>
+                    </Box>
+                  )}
+                </Box>
+              </WidgetCard>
+            </div>
+            )}
+            {showAICorrection && (
+              <div key="ai-correction" data-grid={{ x: 6, y: 14, w: 2, h: 4, minW: 2, minH: 4 }}>
+              <AIErrorBoundary>
+                <WidgetCard
+                  title={<Typography variant="h6" sx={{ fontWeight: 900, fontSize: 22, letterSpacing: 0.5, color: '#fff' }}>AI Correction</Typography>}
+                    onHide={() => setShowAICorrection(false)}
+                  icon={<Spellcheck />}
+                >
+                  <Box sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    <TextField
+                      label="Your Draft Reply"
+                      value={aiCorrectionInput}
+                      onChange={e => setAiCorrectionInput(e.target.value)}
+                      multiline
+                      minRows={4}
+                      fullWidth
+                      variant="outlined"
+                    />
+                    <Box sx={{ mb: 1 }}>
+                      <Typography variant="caption" sx={{ color: '#90caf9', fontWeight: 600 }}>Tone:</Typography>
+                      <Button 
+                        size="small" 
+                        variant={aiCorrectionTone === 'Friendly' ? 'contained' : 'outlined'} 
+                        sx={{ ml: 1 }} 
+                        onClick={() => setAiCorrectionTone('Friendly')}
+                      >
+                        Friendly
+                      </Button>
+                      <Button 
+                        size="small" 
+                        variant={aiCorrectionTone === 'Formal' ? 'contained' : 'outlined'} 
+                        sx={{ ml: 1 }} 
+                        onClick={() => setAiCorrectionTone('Formal')}
+                      >
+                        Formal
+                      </Button>
+                      <Button 
+                        size="small" 
+                        variant={aiCorrectionTone === 'Concise' ? 'contained' : 'outlined'} 
+                        sx={{ ml: 1 }} 
+                        onClick={() => setAiCorrectionTone('Concise')}
+                      >
+                        Concise
+                      </Button>
+                    </Box>
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleGenerateSmartReply}
-                      disabled={aiLoading.smartReply}
-                      sx={{ mb: 2, fontWeight: 700 }}
+                      onClick={handleAICorrectReply}
+                      disabled={aiLoading.correction || !aiCorrectionInput.trim()}
                     >
-                      {aiLoading.smartReply ? 'Generating...' : 'Generate AI Reply'}
+                      {aiLoading.correction ? 'Correcting...' : 'Correct with AI'}
                     </Button>
-                    {aiLoading.smartReply ? (
-                      <AILoadingState message="Generating a smart reply..." />
-                    ) : smartReplyResult && (
+                    {aiLoading.correction ? (
+                      <AILoadingState message="Improving your reply..." />
+                    ) : aiCorrectionResult && (
                       <Box sx={{ mt: 2, p: 2, bgcolor: '#232b3b', borderRadius: 2, border: '1.5px solid #42a5f5' }}>
-                        <Typography variant="subtitle2" sx={{ color: '#90caf9', mb: 1, fontWeight: 600 }}>AI Reply:</Typography>
-                        <Typography variant="body2" sx={{ color: '#fff', fontSize: 15, whiteSpace: 'pre-line' }}>{smartReplyResult}</Typography>
-                        <Button
-                          variant="outlined"
-                          color="secondary"
-                          sx={{ mt: 1 }}
-                          onClick={() => {
-                            setComposePrefill({
-                              to: selectedEmail.from || '',
-                              subject: selectedEmail.subject ? 'Re: ' + selectedEmail.subject : '',
-                              body: smartReplyResult,
-                            });
-                            setComposeOpen(true);
-                            showNotification('AI reply moved to compose window!', 'success');
-                          }}
-                        >
-                          Use Reply
-                        </Button>
+                        <Typography variant="subtitle2" sx={{ color: '#90caf9', mb: 1, fontWeight: 600 }}>Corrected Reply:</Typography>
+                        <Typography variant="body1" sx={{ whiteSpace: 'pre-line', color: '#fff', fontSize: 16 }}>
+                          {aiCorrectionResult}
+                        </Typography>
                       </Box>
                     )}
                   </Box>
                 </WidgetCard>
-              </div>
-            )}
-            {showAICorrection && (
-              <div key="ai-correction" data-grid={{ x: 6, y: 14, w: 2, h: 4, minW: 2, minH: 4 }}>
-                <AIErrorBoundary>
-                  <WidgetCard
-                    title={<Typography variant="h6" sx={{ fontWeight: 900, fontSize: 22, letterSpacing: 0.5, color: '#fff' }}>AI Correction</Typography>}
-                    onHide={() => setShowAICorrection(false)}
-                    icon={<Spellcheck />}
-                  >
-                    <Box sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
-                      <TextField
-                        label="Your Draft Reply"
-                        value={aiCorrectionInput}
-                        onChange={e => setAiCorrectionInput(e.target.value)}
-                        multiline
-                        minRows={4}
-                        fullWidth
-                        variant="outlined"
-                      />
-                      <Box sx={{ mb: 1 }}>
-                        <Typography variant="caption" sx={{ color: '#90caf9', fontWeight: 600 }}>Tone:</Typography>
-                        <Button 
-                          size="small" 
-                          variant={aiCorrectionTone === 'Friendly' ? 'contained' : 'outlined'} 
-                          sx={{ ml: 1 }} 
-                          onClick={() => setAiCorrectionTone('Friendly')}
-                        >
-                          Friendly
-                        </Button>
-                        <Button 
-                          size="small" 
-                          variant={aiCorrectionTone === 'Formal' ? 'contained' : 'outlined'} 
-                          sx={{ ml: 1 }} 
-                          onClick={() => setAiCorrectionTone('Formal')}
-                        >
-                          Formal
-                        </Button>
-                        <Button 
-                          size="small" 
-                          variant={aiCorrectionTone === 'Concise' ? 'contained' : 'outlined'} 
-                          sx={{ ml: 1 }} 
-                          onClick={() => setAiCorrectionTone('Concise')}
-                        >
-                          Concise
-                        </Button>
-                      </Box>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleAICorrectReply}
-                        disabled={aiLoading.correction || !aiCorrectionInput.trim()}
-                      >
-                        {aiLoading.correction ? 'Correcting...' : 'Correct with AI'}
-                      </Button>
-                      {aiLoading.correction ? (
-                        <AILoadingState message="Improving your reply..." />
-                      ) : aiCorrectionResult && (
-                        <Box sx={{ mt: 2, p: 2, bgcolor: '#232b3b', borderRadius: 2, border: '1.5px solid #42a5f5' }}>
-                          <Typography variant="subtitle2" sx={{ color: '#90caf9', mb: 1, fontWeight: 600 }}>Corrected Reply:</Typography>
-                          <Typography variant="body1" sx={{ whiteSpace: 'pre-line', color: '#fff', fontSize: 16 }}>
-                            {aiCorrectionResult}
-                          </Typography>
-                        </Box>
-                      )}
-                    </Box>
-                  </WidgetCard>
-                </AIErrorBoundary>
-              </div>
+              </AIErrorBoundary>
+            </div>
             )}
           </ResponsiveGridLayout>
           {/* Floating show widgets button/menu */}

@@ -1,70 +1,121 @@
-# Getting Started with Create React App
+# Sistem Modern de Management Email cu AI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Repository:** [https://github.com/Mdisomchik/Licenta_last](https://github.com/Mdisomchik/Licenta_last)
 
-## Available Scripts
+## Descriere generală
 
-In the project directory, you can run:
+Acest proiect reprezintă o aplicație web completă pentru managementul inteligent al emailurilor, cu funcționalități avansate de AI: sumarizare, răspunsuri automate, corectare gramaticală și căutare semantică. Aplicația folosește React și Material-UI pentru frontend, Node.js + Express pentru backend și microservicii Flask cu Hugging Face Transformers pentru procesare NLP.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Structura livrabilelor
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Cod sursă complet** (fără fișiere binare compilate)
+- **Frontend:** `/src` (React, Material-UI)
+- **Backend:** `/src/services` (Node.js, Express)
+- **Microservicii AI:** `/venv/Scripts/Activate/summarize_api.py` (Flask, Transformers)
+- **Fișiere de configurare:** `package.json`, `requirements.txt` (dacă există)
+- **Documentație:** Acest fișier README
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Adresa repository
 
-### `npm run build`
+- **GitHub:** [https://github.com/Mdisomchik/Licenta_last](https://github.com/Mdisomchik/Licenta_last)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Pași de instalare și rulare
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1. Clonare repository
 
-### `npm run eject`
+```bash
+git clone https://github.com/Mdisomchik/Licenta_last.git
+cd Licenta_last
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 2. Instalare dependințe Frontend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+cd mail-filter-app
+npm install
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+### 3. Instalare dependințe Backend/AI
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Asigură-te că ai Python 3.8+ și pip instalat.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+cd venv/Scripts/Activate
+pip install -r requirements.txt
+```
 
-### Code Splitting
+Dacă nu există `requirements.txt`, instalează manual:
+```bash
+pip install flask flask-cors transformers sentence-transformers torch langdetect
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+### 4. Lansare microserviciu AI (Flask)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+python summarize_api.py
+```
+Serverul Flask va porni pe portul 5000.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 5. Lansare aplicație React (Frontend)
 
-### Advanced Configuration
+Într-un alt terminal:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+cd mail-filter-app
+npm start
+```
+Aplicația va fi disponibilă pe [http://localhost:3000](http://localhost:3000).
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 6. Configurare Gmail API
 
-### `npm run build` fails to minify
+- Creează un proiect pe [Google Cloud Console](https://console.cloud.google.com/)
+- Activează Gmail API și OAuth 2.0
+- Adaugă datele de client în aplicație (`clientId` în `App.js`)
+- Permite accesul la emailuri pentru contul tău Google
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+### 7. Utilizare
+
+- Autentifică-te cu Google
+- Explorează dashboard-ul cu widget-uri
+- Folosește funcționalitățile AI: sumarizare, răspunsuri, corectare, căutare semantică
+- Gestionează atașamente, contacte și to-do list
+
+---
+
+## Observații
+
+- **Nu include fișiere binare sau compilate** (ex: `node_modules`, `__pycache__`, etc.)
+- Pentru deployment pe server, folosește `npm run build` pentru frontend și un server WSGI (ex: gunicorn) pentru Flask dacă e nevoie.
+- Pentru orice problemă, consultă documentația din cod sau contactează autorul.
+
+---
+
+## Autor
+
+- [Nume Student]
+- [Universitatea Politehnica Timișoara]
+- [Anul, Specializarea]
+
+---
+
+## Licență
+
+Acest proiect este realizat pentru lucrarea de licență și nu este destinat utilizării comerciale fără acordul autorului.

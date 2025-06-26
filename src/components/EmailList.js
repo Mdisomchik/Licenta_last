@@ -323,25 +323,25 @@ const EmailList = ({
                 sx={{ mr: 1, flexShrink: 0 }}
               />
               {/* Subject + sender + date */}
-              <Typography
+                <Typography
                 variant={largeSubject ? 'h6' : 'subtitle1'}
-                sx={{
-                  fontWeight: isUnread ? 900 : 700,
-                  color: '#F4F4F5',
+                  sx={{
+                    fontWeight: isUnread ? 900 : 700,
+                    color: '#F4F4F5',
                   fontSize: largeSubject ? 16 : 14,
-                  minWidth: 60,
+                    minWidth: 60,
                   maxWidth: largeSubject ? 520 : 220,
-                  flexShrink: 1,
+                    flexShrink: 1,
                   flexGrow: 1,
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
                   letterSpacing: largeSubject ? 0.1 : 0,
                   lineHeight: 1.3,
-                }}
-              >
-                {email.subject}
-              </Typography>
+                  }}
+                >
+                  {email.subject}
+                </Typography>
               <Typography
                 variant="body2"
                 sx={{
