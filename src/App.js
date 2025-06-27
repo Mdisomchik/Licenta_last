@@ -1238,8 +1238,6 @@ const App = () => {
             </Button>
           )}
             <Tooltip title="Toggle Theme" placement="bottom"><IconButton color="inherit" sx={{ ml: 1 }} onClick={handleThemeToggle}>{darkMode ? <Brightness7 /> : <Brightness4 />}</IconButton></Tooltip>
-            <Tooltip title="Settings" placement="bottom"><IconButton color="inherit" sx={{ ml: 1 }} onClick={handleSettingsClick}><Report /></IconButton></Tooltip>
-            <Tooltip title="Profile" placement="bottom"><IconButton color="inherit" sx={{ ml: 1 }} onClick={handleProfileClick}><Avatar sx={{ width: 32, height: 32, bgcolor: '#1976d2', fontWeight: 700 }}>U</Avatar></IconButton></Tooltip>
             <Tooltip title="AI Search" placement="bottom"><IconButton color="inherit" sx={{ ml: 1 }} onClick={handleAssistantOpen}><SmartToy /></IconButton></Tooltip>
             <Tooltip title="GitHub Repository" placement="bottom"><IconButton color="inherit" sx={{ ml: 1 }} href="https://github.com/maximvoisan/mail-filter-app" target="_blank"><GitHub /></IconButton></Tooltip>
         </Toolbar>
