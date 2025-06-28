@@ -80,6 +80,16 @@ def strip_html_tags(text):
     clean = re.compile('<.*?>')
     return re.sub(clean, '', text)
 
+def extract_latest_message(email_text):
+    # Remove headers
+    body = re.sub(r'^(From|To|Cc|Bcc|Subject|Date):.*$', '', email_text, flags=re.MULTILINE)
+    # Remove quoted/forwarded blocks
+    body = re.split(r'(-{2,}.*(Original Message|Forwarded message).*)', body, maxsplit=1)[0]
+    # Remove repeated signatures (e.g., lines starting with 'Thank you', 'Best,', etc.)
+    body = re.sub(r'(?i)^(thank you|thanks|best regards|regards|sincerely|cheers|dear|yours truly|with appreciation)[\s\S]*$', '', body, flags=re.MULTILINE)
+    # Remove extra whitespace
+    return body.strip()
+
 @app.route('/summarize', methods=['POST'])
 @cache_with_timeout(300)  # Cache for 5 minutes
 def summarize():
@@ -113,36 +123,35 @@ def smart_reply():
         if not text:
             return jsonify({'error': 'No text provided'}), 400
 
-        # Strip HTML tags from the input text
+        # Clean input
         text = strip_html_tags(text)
         text = text.strip()
+        text = extract_latest_message(text)
 
-        # Always use the AI model for reply generation
-        prompt = f"Given the following email, write a short, polite reply in the same language:\nEMAIL:\n{text}\nREPLY:"
+        # Minimal prompt
+        prompt = f"{text}\n\nReply:"
         outputs = reply_generator(
             prompt,
-            max_length=60,
-            num_return_sequences=1,
+            max_new_tokens=80,
             do_sample=True,
             temperature=0.7,
             top_p=0.9,
             no_repeat_ngram_size=4,
             early_stopping=True
         )
-        reply = outputs[0]['generated_text'].split('REPLY:')[-1].strip()
-        
-        # Fallback to template if reply is empty or too generic
-        if not reply or len(reply.split()) < 3:
+        reply = outputs[0]['generated_text'].split('Reply:')[-1].strip()
+
+        # Remove lines that look like instructions or meta-comments
+        reply_lines = [line.strip() for line in reply.split('\n') if line.strip() and not re.match(r'^(-|include|use|receive|do not|note:|the following|prompt|instructions|meta-comment)', line.strip(), re.IGNORECASE)]
+        reply = ' '.join(reply_lines).strip()
+        if not reply or not re.search(r'[a-zA-Z]', reply):
             context = detect_context(text)
             if context and context in reply_templates:
                 return jsonify({'replies': [reply_templates[context][tone.lower()]]})
             fallback = "Thank you for your email. I will respond shortly." if tone == 'formal' else "Thanks! I'll get back to you soon!"
             return jsonify({'replies': [fallback]})
-        
         return jsonify({'replies': [reply]})
-        
     except Exception as e:
-        print(f"Error in smart-reply: {str(e)}")
         fallback = "Thank you for your email. I will respond shortly." if tone == 'formal' else "Thanks! I'll get back to you soon!"
         return jsonify({'replies': [fallback]})
 

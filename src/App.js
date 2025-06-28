@@ -1632,31 +1632,32 @@ const App = () => {
             )}
             {showAIReply && (
               <div key="ai-reply" data-grid={{ x: 4, y: 14, w: 2, h: 4, minW: 2, minH: 4 }}>
-              <WidgetCard
-                title={<Typography variant="h6" sx={{ fontWeight: 900, fontSize: 22, letterSpacing: 0.5, color: '#fff' }}>AI Reply</Typography>}
+                <WidgetCard
+                  title={<Typography variant="h6" sx={{ fontWeight: 900, fontSize: 22, letterSpacing: 0.5, color: '#fff' }}>AI Reply</Typography>}
                   onHide={() => setShowAIReply(false)}
-                icon={<AutoAwesome />}
-              >
-                  <Box sx={{ p: 2, textAlign: 'center', maxHeight: 340, overflowY: 'auto' }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleGenerateSmartReply}
-                    disabled={aiLoading.smartReply}
-                    sx={{ mb: 2, fontWeight: 700 }}
-                  >
-                    {aiLoading.smartReply ? 'Generating...' : 'Generate AI Reply'}
-                  </Button>
-                  {aiLoading.smartReply ? (
-                    <AILoadingState message="Generating a smart reply..." />
-                  ) : smartReplyResult && (
-                    <Box sx={{ mt: 2, p: 2, bgcolor: '#232b3b', borderRadius: 2, border: '1.5px solid #42a5f5' }}>
-                      <Typography variant="subtitle2" sx={{ color: '#90caf9', mb: 1, fontWeight: 600 }}>AI Reply:</Typography>
-                      <Typography variant="body2" sx={{ color: '#fff', fontSize: 15, whiteSpace: 'pre-line' }}>{smartReplyResult}</Typography>
+                  icon={<AutoAwesome />}
+                >
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, p: 2 }}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleGenerateSmartReply}
+                      disabled={aiLoading.smartReply}
+                      sx={{ width: '100%', fontWeight: 700, borderRadius: 3, textTransform: 'none', mb: 1 }}
+                      startIcon={aiLoading.smartReply ? <CircularProgress size={20} color="inherit" /> : null}
+                    >
+                      {aiLoading.smartReply ? 'Generating...' : 'Generate AI Reply'}
+                    </Button>
+                    {aiLoading.smartReply ? (
+                      <AILoadingState message="Generating a smart reply..." />
+                    ) : smartReplyResult && (
+                      <Typography variant="body1" sx={{ color: '#fff', mt: 2, whiteSpace: 'pre-line', textAlign: 'center', border: '1px solid #42a5f5', borderRadius: 2, p: 1, bgcolor: '#232b3b' }}>{smartReplyResult}</Typography>
+                    )}
+                    {smartReplyResult && (
                       <Button
                         variant="outlined"
                         color="secondary"
-                        sx={{ mt: 1 }}
+                        sx={{ mt: 1, fontWeight: 700, borderRadius: 2, textTransform: 'none' }}
                         onClick={() => {
                           setComposePrefill({
                             to: selectedEmail.from || '',
@@ -1669,11 +1670,10 @@ const App = () => {
                       >
                         Use Reply
                       </Button>
-                    </Box>
-                  )}
-                </Box>
-              </WidgetCard>
-            </div>
+                    )}
+                  </Box>
+                </WidgetCard>
+              </div>
             )}
             {showAICorrection && (
               <div key="ai-correction" data-grid={{ x: 6, y: 14, w: 2, h: 4, minW: 2, minH: 4 }}>
